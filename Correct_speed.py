@@ -6,14 +6,8 @@ import datetime
 wheel_pins = 3600
 # длина колеса датчика скорости
 wheel_length = 0.25132741
-s_tick = 0.240  #медленые отсчеты с датчиков (30мс * 8 тактов)
-s_time = 0.03   #быстрые отсчеты с датчиков (30 мс)
 x_scale = wheel_length / wheel_pins
 
-# коэффициенты пересчета (у нас быстре отсчёты) s_scale_fast
-
-s_scale_slow = (1/0.240)*(wheel_length/wheel_pins)
-s_scale_fast = (wheel_length/wheel_pins)
 arr = []
 
 
@@ -26,13 +20,12 @@ def correct_speed(res):
     res[0].append(x)
     for i in range(1, len(res)):
         time_del = date_to_seconds(res[i][1]) - date_to_seconds(res[i - 1][1])
-        #res[i][3] = float(int(res[i][3]) * s_scale_slow)
         x += float(res[i][0])
         res[i].append(x * x_scale)
-        res[i][0] = float(int(res[i][0]) * s_scale_fast / time_del) * 1.0171 - 0.00005
+        res[i][0] = float(int(res[i][0]) * x_scale / time_del) * 1.0171 - 0.00005
         
 def date_to_seconds(date):
-    #Переводит локальное время в секунды 
+    # Переводит локальное время в секунды 
     try:
         t = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S.%f")
     except ValueError:
@@ -41,7 +34,7 @@ def date_to_seconds(date):
     return t
     
 def seconds_to_date(seconds):
-    #Переводит секунды в локальное время( МСК +3 UTC )
+    # Переводит секунды в локальное время( МСК +3 UTC )
     utc_epoch = 3 * 3600
     seconds -= utc_epoch
     return datetime.datetime.fromtimestamp(seconds).strftime("%Y-%m-%d %H:%M:%S.%f")

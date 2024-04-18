@@ -1,6 +1,9 @@
 import csv
 import sys
 
+laser_stern = '26193'
+laser_nose = '26194'
+
 def data_from_csv(csvfile):
     '''
     считывает таблицу из csv файла в двумерный массив
@@ -49,7 +52,7 @@ fast_list.append('back.csv')
 
 if sys.argv[-1] == 'fast':
     for file in fast_list:
-        devices = {"26194":[], "26193":[]}     
+        devices = {laser_nose:[], laser_stern:[]}     
         table = data_from_csv(file)
 
         for row in table:
@@ -57,13 +60,13 @@ if sys.argv[-1] == 'fast':
                 devices[row[-1]].append(row)
             
             
-        arr_to_csv(devices["26194"], f"{file.split('.')[0]}_26194.csv")
-        arr_to_csv(devices["26193"], f"{file.split('.')[0]}_26193.csv")
+        arr_to_csv(devices[laser_nose], f"{file.split('.')[0]}_{laser_nose}.csv")
+        arr_to_csv(devices[laser_stern], f"{file.split('.')[0]}_{laser_stern}.csv")
 # иначе принимает на вход python3 laser_div.py 1.csv 2.csv ....
 # и для каждого поданого файла создает разделенные
 else:    
     for i in range(1, len(sys.argv)):
-        devices = {"26194":[], "26193":[]}     
+        devices = {laser_nose:[], laser_stern:[]}     
         table = data_from_csv(sys.argv[i])
 
         for row in table:
@@ -71,5 +74,5 @@ else:
                 devices[row[-1]].append(row)
             
             
-        arr_to_csv(devices["26194"], f"{sys.argv[i].split('.')[0]}_26194.csv")
-        arr_to_csv(devices["26193"], f"{sys.argv[i].split('.')[0]}_26193.csv")
+        arr_to_csv(devices[laser_nose], f"{sys.argv[i].split('.')[0]}_{laser_nose}.csv")
+        arr_to_csv(devices[laser_stern], f"{sys.argv[i].split('.')[0]}_{laser_stern}.csv")

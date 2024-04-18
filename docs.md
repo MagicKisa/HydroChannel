@@ -75,3 +75,110 @@
 1_speed.csv, 2_speed.csv ... 10_speed.csv, back_speed.csv 
 
 1_coord.csv, 2_coord.csv ... 10_coord.csv, back_coord.csv 
+
+#### Classic
+
+`python3 Correct_speed.py name1_1.csv name2_1.csv ...`
+
+Применяет Correct_speed.py к каждому переданному файлу
+
+### При изменении аппаратуры
+
+При смене датчика/колеса код нужно изменить. https://github.com/MagicKisa/HydroChannel/blob/master/Correct_speed.py 
+
+Переходим в файл Correct_speed.py и меняем константы указанные на скриншоте
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/1782ec5a-1557-4e10-9d48-7d4b03fd1901)
+
+wheel_pins - число зубчиков в шт
+
+wheel_length - длина колеса в метрах
+
+**Больше ничего менять не нужно**
+
+## laser_div.py
+
+### Назначение
+
+Служит для разделения файла name.csv содержащего показания лазерных дальномеров 
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/8f3021a9-42a5-4b5f-aedf-12d3559c99b4)
+
+на два файла name_26193.csv, name_26194.csv каждый из которых содержит показания своего дальномера
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/5930fef9-160b-42ed-af98-6952e3e378f3) ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/fdbfb07e-5c56-4666-9ada-8e371fdf7681)
+
+26193, 26194 - номера дальномеров riftek определяются на заводе изготовителе и указываются при записи в файл с помощью `udpserv`
+
+### Режимы работы
+
+#### Fast
+
+`python3 laser_div.py fast`
+
+Применяется к 1.csv, 2.csv ... 10.csv, back.csv 
+
+Результат: 
+
+1_26193.csv, 2_26193.csv ... 10_26193.csv, back_26193.csv 
+
+1_26194.csv, 2_26194.csv ... 10_26194.csv, back_26194.csv 
+
+#### Classic
+
+`python3 laser_div.py name1.csv name2.csv ...`
+
+Применяет laser_div.py к каждому переданному файлу
+
+Результат:
+
+name1_26193.csv, name2_26193.csv...
+
+name1_26194.csv, name2_26194.csv
+
+### При смене номеров лазеров 
+
+Нужно заменить в коде 26194 -> номер нового лазера 1
+
+26193 -> номер нового лазера 2
+
+**P.S. Нужно заменить в коде на константы laser1 = 26193, laser2 = 26194, но пока так
+
+## interpolate.py
+
+### Назначение
+
+Служит для синхронизации данных скорости, силы, координаты и лазерных дальномеров за один эксперимент в одном файле.
+
+При этом проблема синхронизации решается с помощью линейной интерполяции данных
+
+При вызове
+
+`python3 interpolate.py 1 1`
+
+Результат:
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/2c656963-b64b-4604-ba0f-4816928e335d) 
+
+Столбцы слева-направо 
+
+координаты-корма-нос-скорость-сила-время(в секундах с начала эксперимента)
+
+### Режимы работы
+
+#### back
+
+При получении на вход back.csv
+
+`python3 interpolate.py back.csv`
+
+Сводит в одну таблицу показания датчиков при проходе назад
+
+#### Интервал
+
+При задании номера первого эксперимента и последнего
+
+`python3 interpolate.py 1 10`
+
+Для каждого эксперимента из этого интервала сводит в таблицу файлы измерений
+

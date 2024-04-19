@@ -210,3 +210,21 @@ back_res_inv.csv
 
 Этот скрипт можно применить к любому файлу, но в условиях данной задачи он применяется к back_res.csv
 
+### Скриншоты
+
+Начало и конец back_res.csv
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/9bc8b91d-d834-4934-84fc-69e495be443e)
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/abaf0097-8d53-4a7f-8521-7930c6f24c60)
+
+Начало и конец back_res_inv.csv
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/218f63e6-755f-4125-8e70-a1db5fa950f9)
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/9861bd27-dce3-4360-91f3-c55980afe31e)
+
+
+
+
+

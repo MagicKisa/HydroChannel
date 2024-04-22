@@ -6,11 +6,15 @@
 
 Служит для перевода таблицы измерений тензодатчика вида:
 
+тензодатчик | время
+
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/679c1394-ad00-4ae5-9f25-ee70cbdf8cdd)
 
 *26 это значение температуры - по умолчанию arduino uno выдаёт её значение какое-то количество раз перед тем как выдавать показания тензодатчика*
 
 В таблицу сила в граммах от времени: 
+
+Сила г | Время c
 
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/3b5c0eb3-ebe6-4262-94cd-fe74a7809b61)
 
@@ -40,6 +44,8 @@
 
 Требует наличия файла approx_rate.csv
 
+k | b
+
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/02732e90-c98b-4a6a-a065-fbfc4d7f42db)
 
 Содержащего коэффициенты k;b (смотрите раздел тарировка)
@@ -50,13 +56,19 @@
 
 Служит для построения по измерениям скоростемера таблицы мгновенной скорости от времени и координаты от времени
 
+Импульсы | время
+
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/8ae0350e-f0ac-40a6-b470-28b3a7829f1e)
 
 Показания скоростемера 1_1.csv
 
+Скорость м/c | время
+
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/bd68abb3-d5cf-4676-8e48-17b750a40ed8)
 
 Скорость от времени 1_speed.csv
+
+Координата м | время 
 
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/de6c64d4-2563-487f-bddb-62b4adb88116)
 
@@ -104,11 +116,17 @@ wheel_length - длина колеса в метрах
 
 Служит для разделения файла name.csv содержащего показания лазерных дальномеров 
 
+время | расстояние мм | Успешность записи | Номер датчика
+
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/8f3021a9-42a5-4b5f-aedf-12d3559c99b4)
 
 на два файла name_26193.csv, name_26194.csv каждый из которых содержит показания своего дальномера
 
-![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/5930fef9-160b-42ed-af98-6952e3e378f3) ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/fdbfb07e-5c56-4666-9ada-8e371fdf7681)
+расстояние мм | время | успешность записи | номер датчика
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/5930fef9-160b-42ed-af98-6952e3e378f3) 
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/fdbfb07e-5c56-4666-9ada-8e371fdf7681)
 
 26193, 26194 - номера дальномеров riftek определяются на заводе изготовителе и указываются при записи в файл с помощью `udpserv`
 
@@ -158,7 +176,10 @@ name1_26194.csv, name2_26194.csv
 
 Результат:
 
-![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/2c656963-b64b-4604-ba0f-4816928e335d) 
+коорд(м)| корма(мм)|нос(мм)|скорость(м/с)|сила(граммы)|время(в секундах с начала эксперимента)
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/51b6855e-fb53-4706-ade0-6ddad54f356c)
+
 
 Столбцы слева-направо 
 
@@ -214,17 +235,54 @@ back_res_inv.csv
 
 Начало и конец back_res.csv
 
+коорд(м)| корма(мм)|нос(мм)|скорость(м/с)|сила(граммы)|время(в секундах с начала эксперимента)
+
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/9bc8b91d-d834-4934-84fc-69e495be443e)
 
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/abaf0097-8d53-4a7f-8521-7930c6f24c60)
 
 Начало и конец back_res_inv.csv
 
+коорд(м)| корма(мм)|нос(мм)|скорость(м/с)|сила(граммы)|время(в секундах с начала эксперимента)
+
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/218f63e6-755f-4125-8e70-a1db5fa950f9)
 
 ![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/9861bd27-dce3-4360-91f3-c55980afe31e)
 
 
+## relate_laser.py
 
+### Назначение
 
+Служит для того, чтобы пересчитать показания дальномеров в результирующих файлах проходов (1_res, 2_res, ...) относительно показаний лазеров при медленном проходе назад (back).
+
+### Применение 
+
+`python3 relate_laser.py back_res_inv.csv 1 10`
+
+Результатом применения являются файлы
+
+1_res_rel.csv 2_res_rel.csv ... 10_res_rel.csv
+
+Где показания дальномеров отнесены к проходу назад
+
+### Пример работы
+
+1_res.csv
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/9b95fda2-4590-4b1f-a486-58cd6e048bc1)
+
+back_res_rel.csv
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/e65eb76d-e633-46d2-831b-37abea157ec4)
+
+1_res_rel.csv
+
+![image](https://github.com/MagicKisa/HydroChannel/assets/105859497/1429f98d-fe54-4e88-8530-d2dbdf6091ef)
+
+**При вычислении относительных показаний используется разность координат. Поэтому в начале и конце файла показания лазеров не отнесены к back**
+
+### Справка
+
+Относительные показания позволяют не учитывать изменение показаний лазеров связанных с тем что рельсы по которым едет телега не являются строго горизонтальными.
 

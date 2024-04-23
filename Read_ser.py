@@ -7,6 +7,10 @@ import keyboard
 from threading import Thread
 
 BAUDR = 115200
+system = 'Linux'
+port_prefixs = {'Linux': '/dev/tty/ACM', 'Windows': 'COM'}
+post_prefix = post_prefixs[system]
+
 '''
 Инструкция для использования
 
@@ -37,7 +41,7 @@ class com:
         self.port = port
         self.baud = baud
         # Для работы на Linux и Raspberry pi поменять COM на /dev/tty/ACM{}
-        self.ser = serial.Serial(f'COM{self.port}', baudrate=baud)
+        self.ser = serial.Serial(f'{post_prefix}{self.port}', baudrate=baud)
         self.res = []
         self.num_of_experiment = num_of_experiment
 
@@ -126,5 +130,4 @@ for c in coms:
 
 '''
 Код предназначенный для считывания данных с портов и записи в csv файлы
-Для работы на Linux и Raspberry pi поменять COM на /dev/tty/ACM{}
 '''

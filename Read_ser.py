@@ -8,7 +8,7 @@ from threading import Thread
 
 BAUDR = 115200
 system = 'Linux'
-port_prefixs = {'Linux': '/dev/tty/ACM', 'Windows': 'COM'}
+port_prefixs = {'Linux': '/dev/ttyACM', 'Windows': 'COM'}
 port_prefix = port_prefixs[system]
 
 '''

@@ -83,11 +83,6 @@ class com:
                 testwriter.writerow(d)
 
 
-def correct_speed(res):
-    for r in res:
-        r[3] = int(r[3]) * 0.009375
-
-
 # считывание портов и номера эксперимента из командной строки
 num_of_experiment = sys.argv[-1]
 ports_num = sys.argv[1:-1]

@@ -9,7 +9,7 @@ from threading import Thread
 BAUDR = 115200
 system = 'Linux'
 port_prefixs = {'Linux': '/dev/tty/ACM', 'Windows': 'COM'}
-post_prefix = post_prefixs[system]
+port_prefix = port_prefixs[system]
 
 '''
 Инструкция для использования
@@ -41,7 +41,7 @@ class com:
         self.port = port
         self.baud = baud
         # Для работы на Linux и Raspberry pi поменять COM на /dev/tty/ACM{}
-        self.ser = serial.Serial(f'{post_prefix}{self.port}', baudrate=baud)
+        self.ser = serial.Serial(f'{port_prefix}{self.port}', baudrate=baud)
         self.res = []
         self.num_of_experiment = num_of_experiment
 
@@ -77,24 +77,18 @@ class com:
         '''
         метод отвечает за запись считанных данных в csv 
         '''
-        with open(f'{self.name}_{self.port}.csv', 'w', newline='') as csvfile:
+        with open(f'{self.num_of_experiment}_{self.port}.csv', 'w', newline='') as csvfile:
             testwriter = csv.writer(csvfile, delimiter=';')
             for d in self.res:
                 testwriter.writerow(d)
 
-    def write_at_port(self, string):
-        '''
-        метод был предназначен для регуляции частоты считывания, но в последнем варианте не используется
-        посылает сигнал датчику чтобы он начал работу
-        сейчас не обязателен
-        '''
-        self.ser.write(str(string).encode())
 
 def correct_speed(res):
     for r in res:
         r[3] = int(r[3]) * 0.009375
 
 
+# считывание портов и номера эксперимента из командной строки
 num_of_experiment = sys.argv[-1]
 ports_num = sys.argv[1:-1]
 
@@ -109,20 +103,9 @@ for t in threads:
     t.start()
 time.sleep(2)
 
-# не обязательно
-for c in coms:    
-    c.write_at_port(sys.argv[-1])
-#
-
 # присоединение потоков к main
 for t in threads:
     t.join()
-
-# не обязательно    
-for c in coms:    
-    c.write_at_port(0)
-#
-#correct_speed(coms[-1].res)
 
 # Запись в файлы данных с каждого созданного порта
 for c in coms:    
